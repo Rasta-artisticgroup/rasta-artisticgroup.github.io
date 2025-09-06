@@ -1,1 +1,0 @@
-# rasta-artisticgroup.github.io

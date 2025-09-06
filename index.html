@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>گروه فرهنگی هنری رَستا</title>
+  <meta name="description" content="رستا، جولانگاه خیال و اندیشه — ماهنامه، پادکست و محصولات فرهنگی">
+  <style>
+    :root{ --bg:#fff; --fg:#111; --muted:#666; --border:#e7e7e7; }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.7}
+    a{color:inherit}
+    .container{max-width:980px;margin:0 auto;padding:0 16px}
+    .hero{padding:48px 0 16px;background:radial-gradient(ellipse at center, rgba(0,0,0,.08), transparent 60%)}
+    .hero .logo{display:block;margin:0 auto;width:140px;height:auto;filter:contrast(1.1)}
+    .brandline{margin:8px 0 0;text-align:center;color:var(--muted);font-size:.95rem}
+    .nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:12px 0 28px}
+    .nav a{display:inline-block;border:1px solid var(--fg);padding:10px 16px;border-radius:999px;text-decoration:none}
+    .nav a:hover{background:var(--fg);color:var(--bg)}
+    .section{padding:8px 0 48px}
+    .section h2{margin:0 0 12px;font-size:1.25rem}
+    .card{border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+    .grid{display:grid;gap:12px}
+    footer{padding:28px 0;text-align:center;color:var(--muted);border-top:1px solid var(--border)}
+    .social{display:flex;gap:12px;justify-content:center;margin-top:8px}
+    .two-tone{background:linear-gradient(180deg,#fff 0%,#f7f7f7 100%)}
+    @media (min-width:700px){ .grid{grid-template-columns:1fr 1fr 1fr} }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <img class="logo" src="/assets/images/logo.png" alt="Rasta logo" onerror="this.style.display='none'">
+      <div class="brandline">رستا، جولانگاه خیال و اندیشه</div>
+      <nav class="nav">
+        <a href="/">خانه</a>
+        <a href="/about.html">درباره ما</a>
+        <a href="/products.html">محصولات</a>
+        <a href="/issues.html">مجلات</a>
+        <a href="/contact.html">ارتباط با ما</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section two-tone">
+      <h2>چه خبر؟</h2>
+      <div id="news" class="grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div>رستا، جولانگاه خیال و اندیشه</div>
+    <div class="social">
+      <a href="https://t.me/Rasta_USC" target="_blank" rel="noopener">تلگرام</a>
+      <a href="https://www.instagram.com/rasta_usc" target="_blank" rel="noopener">اینستاگرام</a>
+    </div>
+  </footer>
+
+  <script>
+    (async function(){
+      try{
+        const res = await fetch('/data/news.json', {cache:'no-store'});
+        const items = await res.json();
+        const box = document.getElementById('news');
+        (items||[]).slice(0,3).forEach(it=>{
+          const d = document.createElement('div');
+          d.className='card';
+          d.innerHTML = '<strong><a target="_blank" rel="noopener" href="'+it.url+'">'+it.title+'</a></strong>'
+                        + (it.date? '<br><small style="color:#666">'+it.date+'</small>':'')
+                        + (it.summary? '<p style="margin:8px 0 0">'+it.summary+'</p>':'');
+          box.appendChild(d);
+        });
+      }catch(e){ console.warn(e); }
+    })();
+  </script>
+</body>
+</html>
